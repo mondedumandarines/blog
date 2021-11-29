@@ -1,0 +1,28 @@
+library("tidyr")
+# Imports data set
+red_wine <- read.csv("winequality-red.csv")
+white_wine <- read.csv("winequality-white.csv")
+colnames(red_wine) <- "x"
+colnames(white_wine) <- "x"
+# Cleans dataset
+red_wine <- separate(red_wine, x, c("fixed_acidity","volatile_acidity","citric_acid",
+                      "residual_sugar","chlorides","free_sulfur_dioxide",
+                      "total_sulfur_dioxide","density","pH","sulphates",
+                      "alcohol","quality"), sep=';')
+white_wine <- separate(white_wine, x, c("fixed_acidity","volatile_acidity","citric_acid",
+                                    "residual_sugar","chlorides","free_sulfur_dioxide",
+                                    "total_sulfur_dioxide","density","pH","sulphates",
+                                    "alcohol","quality"), sep=';')
+w_wine_quality <- as.numeric(white_wine$quality)
+r_wine_quality <- as.numeric(red_wine$quality)
+
+#Plots the quality 
+plot(r_wine_quality)
+plot(w_wine_quality)
+
+# Conducts a t-test of white wine quality and red wine quality
+t_test <- t.test(w_wine_quality, r_wine_quality)
+
+#Box plot
+boxplot(w_wine_quality,r_wine_quality, main = "Wine Quality", xlab = 
+          "White wine              Red Wine", ylab= "Quality Score")
